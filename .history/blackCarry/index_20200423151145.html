@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+    content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<title>黑人兄弟在线接单。。。</title>
+<meta name="description" content="dev1分支">
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        background-color: black;
+    }
+
+    img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #container {
+        height: 100%;
+        background: url('static/img/wechat.jpg') no-repeat top center/auto 100%;
+
+    }
+
+    @media screen and (max-width: 700px) {
+        #container {
+            height: 100%;
+            background: url('static/img/wechat.jpg') no-repeat top center/100% 100%;
+        }
+    }
+
+    #jntm {
+        display: none;
+    }
+
+    audio,
+    #jntm_music {
+        display: none;
+    }
+
+    #black {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding-top: 60%;
+        color: #fff;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        background: #000 url('static/img/wait.jpg') center top no-repeat;
+    }
+
+    #toConnect {
+        display: none;
+        margin-top: 40px;
+        padding: 4px 12px;
+        border: 2px solid #fff;
+        border-radius: 10px;
+        font-size: 36px;
+    }
+</style>
+</head>
+
+<body>
+    <div id="black">
+        黑人兄弟准备中..
+        <div id="toConnect">点击连线</div>
+    </div>
+    <div id="container">
+        <audio id="wx_music" src="static/wechatcall.mp3" controls loop></audio>
+    </div>
+    <div id="jntm"></div>
+    <div id="hr">
+    </div>
+    <audio id="black_mp3" controls loop src="static/astronomia.mp3">
+        您的浏览器不支持 audio 元素。
+    </audio>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script>
+        var ele = document.getElementById("wx_music");
+        var black_mp3 = document.getElementById("black_mp3");
+        var toConnect = document.getElementById('toConnect')
+        var firstMask = document.getElementById('black')
+        var mainfest = [
+            { src: "static/img/wechat.jpg" },
+            { src: "static/img/0.gif" },
+            { src: "static/img/1.gif" },
+            { src: "static/img/2.gif" },
+            { src: "static/img/3.gif" },
+            { src: "static/img/4.gif" },
+            // 音频
+            { src: "static/astronomia.mp3", id: 'loop' },
+            // 视频
+            // { src: "./video/video_01.mp4",id:'myVideo' }
+        ];
+
+        var preload = {
+            // 预加载函数
+            startPreload: function () {
+                var preload = new createjs.LoadQueue(true);
+                //注意加载音频文件需要调用如下代码行
+                preload.installPlugin(createjs.SOUND);
+                //为preloaded添加当队列完成全部加载后触发事件
+                preload.addEventListener("complete", this.loadComplete);
+                //设置最大并发连接数  最大值为10
+                preload.setMaxConnections(3);
+                preload.loadManifest(mainfest);
+            },
+            // 处理preload添加当队列完成全部加载后触发事件
+            loadComplete: function () {
+                toConnect.style.display = 'block'
+                toConnect.onclick = function () {
+                    firstMask.style.display = 'none'
+                    ele.play()
+                }
+            }
+        }
+        setTimeout(function () {
+            preload.startPreload();
+        }, 200)
+
+        var router = 4;
+        document.getElementById("container").onclick = function () {
+            ele.pause();
+            this.removeChild(ele);
+            this.style.display = "none";
+            var jntm = document.getElementById("jntm");
+            jntm.style.display = "block";
+            black_mp3.play();
+            hr.innerHTML = '<iframe id="jntm_music" frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="static/astronomia.mp3"></iframe>';
+            routing()
+        };
+        function routing() {
+            ele.pause();
+            if (router == 4) {
+                router = 1
+                if (document.body.clientWidth > document.body.clientHeight) {
+                    jntm.innerHTML = '<img  src="static/img/0.gif" width="100%" style="margin: 0" >';
+                } else {
+                    jntm.innerHTML = '<img  src="static/img/0.gif" width="100%" style="margin:45% 0" >';
+                }
+                setTimeout(function () {
+                    if (document.body.clientWidth > document.body.clientHeight) {
+                        jntm.innerHTML = '<img id="img1" src="static/img/1.gif"  width="100%" style="margin:0">';
+                    } else {
+                        jntm.innerHTML = '<img id="img1" src="static/img/1.gif"  width="100%" style="margin:45% 0">';
+                    }
+                }, 4000);
+                setTimeout(function () {
+                    if (document.body.clientWidth > document.body.clientHeight) {
+                        jntm.innerHTML = '<img id="img1" src="static/img/2.gif"  width="100%" style="margin:0">';
+                    } else {
+                        jntm.innerHTML = '<img id="img1" src="static/img/2.gif"  width="100%" style="margin:45% 0">';
+                    }
+                }, 8000);
+                setTimeout(function () {
+                    if (document.body.clientWidth > document.body.clientHeight) {
+                        jntm.innerHTML = '<img id="img1" src="static/img/3.gif"  width="100%" style="margin:0">';
+                    } else {
+                        jntm.innerHTML = '<img id="img1" src="static/img/3.gif"  width="100%" style="margin:45% 0">';
+                    }
+
+                }, 12000);
+                setTimeout(function () {
+                    if (document.body.clientWidth > document.body.clientHeight) {
+                        jntm.innerHTML = '<img id="img1" src="static/img/4.gif"  width="100%" style="margin:0">';
+                    } else {
+                        jntm.innerHTML = '<img id="img1" src="static/img/4.gif"  width="100%" style="margin:45% 0">';
+                    }
+
+                }, 16000);
+                setTimeout(function () {
+                    router = 4
+                    routing()
+                }, 20000)
+            }
+        }
+    </script>
+</body>
+
+</html>
